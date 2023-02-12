@@ -10,6 +10,6 @@ public class MarsRoverTest {
     public void chkRoverNavigation() {
         MarsRover marsRover = new MarsRover("M1", 1, 2,'N');
         Plateau plateau = new Plateau (5,5);
-        assertEquals ("1 3 N", marsRover.navigate("LMLMLMMM"));
+        assertEquals ("1 3 N", marsRover.navigate("LMLMLMLMM"));
     }
 }
