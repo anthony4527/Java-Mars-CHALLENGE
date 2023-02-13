@@ -10,4 +10,8 @@ public class Plateau {
         this.range[1] = y;
     }
 
+    public int[] getRange(){
+        return this.range;
+    }
+
 }

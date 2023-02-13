@@ -1,8 +1,5 @@
 package com.techgames;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MarsRover extends SpaceVehicle {
 
 
@@ -45,37 +42,55 @@ public class MarsRover extends SpaceVehicle {
         }
    }
 
-    @Override public void move(int count){
+    @Override public void move(int count, Plateau plateau){
         char curFace = this.face;
+        int boundary[] = plateau.getRange();
         switch (curFace) {
+            // if step in faced direction is within plateau, then move else stay
             case 'N':
-                this.position[1] += count;
+                if ((this.position[1] + count) <= boundary[1]) {
+                    this.position[1] += count;
+                } else {
+                    System.out.println("Cannot move further outside plateau!!");
+                }
                 break;
             case 'E':
-                this.position[0] += count;
+                if ((this.position[0] + count) <= boundary[0]) {
+                    this.position[0] += count;
+                } else {
+                System.out.println("Cannot move further outside plateau!!");
+                }
                 break;
             case 'S':
-                this.position[1] -= count;
+                if ((this.position[1] - count) >= 0) {
+                    this.position[1] -= count;
+                } else {
+                    System.out.println("Cannot move further outside plateau!!");
+                }
                 break;
             case 'W':
-                this.position[0] -= count;
+                if ((this.position[0] - count) >= 0) {
+                    this.position[0] -= count;
+                } else {
+                    System.out.println("Cannot move further outside plateau!!");
+                }
                 break;
         }
     }
 
-    public String navigate(String input) {
+    public String navigate(String input, Plateau plateau) {
 
         String newPosition;
 
        //read each char of command to rotate or move step
-        System.out.println(String.valueOf(position[0]) + " " + String.valueOf(position[1]) + " " + face);
+        //System.out.println(String.valueOf(position[0]) + " " + String.valueOf(position[1]) + " " + face);
         for (int i=0; i< input.length(); i++ ) {
             switch (input.charAt(i)){
                 case 'L','R':
                     rotate(input.charAt(i));
                     break;
                 case 'M':
-                    move(1);
+                    move(1, plateau);
                     break;
             }
         }
