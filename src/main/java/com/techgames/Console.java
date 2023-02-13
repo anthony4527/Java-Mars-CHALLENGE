@@ -56,6 +56,9 @@ public class Console {
         while (start == true ){
             firstInput = false;
             secondInput = false;
+            position = null;
+            inputCommand = null;
+
             do {
                 System.out.println("Please enter the position to land the Rover:");
                 position = scanner.nextLine();
@@ -66,16 +69,10 @@ public class Console {
                 }
             } while (!firstInput);
 
-            if (position.equals("999")) {
-                start = false;
-                System.out.println("You will now disconnect with Rover...bye bye");
-                break;
-
-            }
-
             do {
                 System.out.println("What is your navigation command?");
                 inputCommand = scanner.nextLine();
+
                 if (!isValidCommand(inputCommand)){
                     System.out.println ("??? Not valid input");
                 }  else {
@@ -83,13 +80,20 @@ public class Console {
                 }
             } while (!secondInput);
 
+            System.out.println("Call method now with command "+inputCommand);
             //send command to Mars Rover & get the output
             MarsRover marsRover = new MarsRover("M1", Character.getNumericValue(position.charAt(0)),
                     Character.getNumericValue(position.charAt(2)), position.charAt(4) );
             newPosition = marsRover.navigate(inputCommand, plateau);
 
             System.out.println("Mars Rover has moved to "+ newPosition);
-            System.out.println("Input next command or enter '999' to exit");
+
+            System.out.println("Enter any key to continue or 'X' to stop");
+            if (scanner.nextLine().equals("X")) {
+                start = false;
+                System.out.println("You will now disconnect with Rover...bye bye");
+                break;
+            }
         }
 
     }
