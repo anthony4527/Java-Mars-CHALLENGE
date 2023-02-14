@@ -8,8 +8,8 @@ public class Console {
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_PURPLE = "\u001B[45m";
     public static final String ANSI_RED = "\u001B[41m";
-    public static final String ANSI_GREEN = "\u001B[42m";
-    private  static boolean isValidPosition (String input){
+    public static final String ANSI_CYAN = "\u001B[46m";
+    private static boolean isValidPosition (String input){
         if (input == null) {
             return false;
         }
@@ -34,7 +34,7 @@ public class Console {
         return true;
     }
 
-    private  static boolean isValidCommand (String input){
+    private static boolean isValidCommand (String input){
         if (input == null) {
             return false;
         }
@@ -47,16 +47,53 @@ public class Console {
         return true;
     }
 
+    private static String getRoverLandPosition(Scanner scanner, String name){
+        boolean firstInput = false;
+        String position;
+        do {
+            if (name.equals("M1")){
+                System.out.println(ANSI_CYAN+"Please enter the position to land the Rover M1:"+ANSI_RESET);
+            } else {
+                System.out.println(ANSI_PURPLE+"Please enter the position to land the Rover M2:"+ANSI_RESET);
+            }
+
+            position = scanner.nextLine();
+            if (!isValidPosition(position)){
+                System.out.println ("??? Not valid input");
+            }  else {
+                firstInput = true;
+            }
+        } while (!firstInput);
+        return position;
+    }
+
+    private static String getRoverCommand(Scanner scanner, String name) {
+        boolean secondInput = false;
+        String inputCommand;
+        do {
+            if (name.equals("M1")){
+                System.out.println(ANSI_CYAN +"Enter navigation command for M1:"+ANSI_RESET);
+            } else {
+                System.out.println(ANSI_PURPLE+"Enter navigation command for M2:"+ANSI_RESET);
+            }
+            inputCommand = scanner.nextLine();
+            if (!isValidCommand(inputCommand)){
+                System.out.println ("??? Not valid input");
+            }  else {
+                secondInput = true;
+            }
+        } while (!secondInput);
+        return inputCommand;
+    }
+
     public static void main(String[] args) {
         boolean start;
         String position, newPosition, plateauRange;
         String inputCommand;
-        boolean firstInput = false;
         boolean secondInput = false;
         int x,y;
 
         Scanner scanner = new Scanner(System.in);
-
 
         System.out.println("***********************************************");
         System.out.println("* MARS SPECIAL MISSION - PRECIOUS ROCK SEARCH *");
@@ -68,69 +105,25 @@ public class Console {
         y = Character.getNumericValue(plateauRange.charAt(2));
         Plateau plateau = new Plateau (x,y);
 
+
+        position = getRoverLandPosition(scanner, "M1");
+        MarsRover marsRover1 = new MarsRover("M1", Character.getNumericValue(position.charAt(0)),
+                Character.getNumericValue(position.charAt(2)), position.charAt(4) );
+
+        position = getRoverLandPosition(scanner, "M2");
+        MarsRover marsRover2 = new MarsRover("M2", Character.getNumericValue(position.charAt(0)),
+                Character.getNumericValue(position.charAt(2)), position.charAt(4) );
+
         start = true;
         while (start == true ){
-            firstInput = false;
-            secondInput = false;
-
-            do {
-                System.out.println(ANSI_GREEN+"Please enter the position to land the Rover M1:"+ANSI_RESET);
-                position = scanner.nextLine();
-                if (!isValidPosition(position)){
-                   System.out.println ("??? Not valid input");
-                }  else {
-                    firstInput = true;
-                }
-            } while (!firstInput);
-
-            do {
-                System.out.println(ANSI_GREEN +"Enter navigation command for M1:"+ANSI_RESET);
-                inputCommand = scanner.nextLine();
-
-                if (!isValidCommand(inputCommand)){
-                    System.out.println ("??? Not valid input");
-                }  else {
-                    secondInput = true;
-                }
-            } while (!secondInput);
 
             //send command to Mars Rover & get the output
-            MarsRover marsRover1 = new MarsRover("M1", Character.getNumericValue(position.charAt(0)),
-                    Character.getNumericValue(position.charAt(2)), position.charAt(4) );
+            inputCommand = getRoverCommand(scanner, "M1");
             newPosition = marsRover1.navigate(inputCommand, plateau);
+            System.out.println(ANSI_CYAN+"Mars Rover M1 has moved to ("+ newPosition + ")" + ANSI_RESET);
 
-            System.out.println(ANSI_GREEN+"Mars Rover M1 has moved to ("+ newPosition + ")" + ANSI_RESET);
-
-// Launch M2
-            firstInput = false;
-            secondInput = false;
-
-            do {
-                System.out.println(ANSI_PURPLE+"Please enter the position to land the Rover M2:"+ANSI_RESET);
-                position = scanner.nextLine();
-                if (!isValidPosition(position)){
-                    System.out.println ("??? Not valid input");
-                }  else {
-                    firstInput = true;
-                }
-            } while (!firstInput);
-
-            do {
-                System.out.println(ANSI_PURPLE+"Enter navigation command for M2:"+ANSI_RESET);
-                inputCommand = scanner.nextLine();
-
-                if (!isValidCommand(inputCommand)){
-                    System.out.println ("??? Not valid input");
-                }  else {
-                    secondInput = true;
-                }
-            } while (!secondInput);
-
-            //send command to Mars Rover & get the output
-            MarsRover marsRover2 = new MarsRover("M2", Character.getNumericValue(position.charAt(0)),
-                    Character.getNumericValue(position.charAt(2)), position.charAt(4) );
+            inputCommand = getRoverCommand(scanner, "M2");
             newPosition = marsRover2.navigate(inputCommand, plateau);
-
             System.out.println(ANSI_PURPLE+"Mars Rover M2 has moved to ("+ newPosition + ")" + ANSI_RESET);
 
             // Wait for next command
