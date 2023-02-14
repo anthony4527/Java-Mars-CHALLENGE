@@ -76,6 +76,13 @@ public class MarsRover extends SpaceVehicle {
         }
     }
 
+    public String probeTarget (Plateau plateau){
+       if ((this.position[0] == plateau.target[0])&& (this.position[1] == plateau.target[1])) {
+           return "found";
+       } else {
+           return "";
+        }
+    }
     public boolean isSafePosition(int[] position, Plateau plateau){
        int tmp[] = {-1,-1};
 
@@ -106,6 +113,9 @@ public class MarsRover extends SpaceVehicle {
                 case 'M':
                     move(1, plateau);
                     break;
+            }
+            if (probeTarget(plateau).equals("found")){
+                return "found";
             }
         }
         //get the new position and direction of Rover

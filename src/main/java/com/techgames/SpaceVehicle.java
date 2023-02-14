@@ -23,4 +23,5 @@ public abstract class SpaceVehicle {
     public abstract void rotate(char indicator);
     public abstract void move(int count, Plateau plateau);  //method to move on a plateau object
 
+    public abstract String probeTarget(Plateau plateau);
 }

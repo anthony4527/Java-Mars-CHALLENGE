@@ -78,4 +78,13 @@ public class MarsRoverTest {
         assertEquals ("4 4 E", marsRover1.navigate("RM", plateau));
         assertEquals ("3 5 N", marsRover2.navigate("MM", plateau));
     }
+
+    //@Test
+    public void chkProbeTarge() {
+        Plateau plateau = new Plateau (5,5);
+
+        MarsRover marsRover = new MarsRover("M1",plateau.target[0], plateau.target[1],'N');
+
+        assertEquals ("found", marsRover.probeTarget(plateau));
+    }
 }

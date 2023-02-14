@@ -122,10 +122,18 @@ public class Console {
             newPosition = marsRover1.navigate(inputCommand, plateau);
             System.out.println(ANSI_CYAN+"Mars Rover M1 has moved to ("+ newPosition + ")" + ANSI_RESET);
 
+            if (newPosition.equals("found")){
+                System.out.println(ANSI_RED+"Precious metal found !!!!! at ("+ newPosition + ")" + ANSI_RESET);
+                break;
+            }
+
             inputCommand = getRoverCommand(scanner, "M2");
             newPosition = marsRover2.navigate(inputCommand, plateau);
             System.out.println(ANSI_PURPLE+"Mars Rover M2 has moved to ("+ newPosition + ")" + ANSI_RESET);
-
+            if (newPosition.equals("found")){
+                System.out.println(ANSI_RED+"Precious metal found !!!!! at ("+ newPosition + ")" + ANSI_RESET);
+                break;
+            }
             // Wait for next command
             System.out.println("Enter any key to continue or 'X' to stop");
             if (scanner.nextLine().equals("X")) {
