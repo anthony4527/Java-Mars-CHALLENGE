@@ -5,9 +5,7 @@ public class MarsRover extends SpaceVehicle {
 
    public MarsRover (String name, int x, int y, char direction) {
         super(name, x, y, direction);
-
    }
-
     @Override public void rotate(char leftRight){
         char curFace = this.face;
         switch (curFace) {
@@ -45,39 +43,55 @@ public class MarsRover extends SpaceVehicle {
     @Override public void move(int count, Plateau plateau){
         char curFace = this.face;
         int boundary[] = plateau.getRange();
+
+        int[] targetPosition = {this.position[0], this.position[1] };
+
         switch (curFace) {
             // if step in faced direction is within plateau, then move else stay
+            // get the target position by case of current facing direction
+            // if target position is boundary or occupied, do not move
             case 'N':
-                if ((this.position[1] + count) <= boundary[1]) {
-                    this.position[1] += count;
-                } else {
-                    System.out.println("Cannot move further outside plateau!!");
-                }
+                targetPosition[1] += count;
                 break;
             case 'E':
-                if ((this.position[0] + count) <= boundary[0]) {
-                    this.position[0] += count;
-                } else {
-                System.out.println("Cannot move further outside plateau!!");
-                }
+                targetPosition[0] += count;
                 break;
             case 'S':
-                if ((this.position[1] - count) >= 0) {
-                    this.position[1] -= count;
-                } else {
-                    System.out.println("Cannot move further outside plateau!!");
-                }
+                targetPosition[1] -= count;
                 break;
             case 'W':
-                if ((this.position[0] - count) >= 0) {
-                    this.position[0] -= count;
-                } else {
-                    System.out.println("Cannot move further outside plateau!!");
-                }
+                targetPosition[0] -= count;
                 break;
+        }
+        if (isSafePosition(targetPosition, plateau)) {
+            //remove in-use state of current plateau location
+            plateau.clearInuse(this.position[0],this.position[1]);
+            this.position[0] = targetPosition[0];
+            this.position[1] = targetPosition[1];
+            //set in-use state of location of new position
+            plateau.setInuse(this.position[0],this.position[1]);
+        } else {
+            System.out.println("Cannot move - boundary or occupied or hazard!!Stay at position ("+
+                    String.valueOf(position[0])+","+String.valueOf(position[1])+")");
         }
     }
 
+    public boolean isSafePosition(int[] position, Plateau plateau){
+       int tmp[] = {-1,-1};
+
+       for (int i= 0; i< plateau.gridInuse.size(); i++) {
+           tmp = plateau.gridInuse.get(i);
+           if ((position[0]== tmp[0]) && (position[1] == tmp[1])){
+               return false;
+           }
+       }
+       tmp = plateau.getRange();
+       //if positon is outside plateau range, return not safe
+        if ((position[0] <0 ) || (position[0]> tmp[0]) || (position[1] <0 ) || (position[1]> tmp[1])) {
+            return false;
+        }
+        return true;
+    }
     public String navigate(String input, Plateau plateau) {
 
         String newPosition;

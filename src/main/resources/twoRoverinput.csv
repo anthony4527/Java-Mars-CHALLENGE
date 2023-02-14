@@ -1,0 +1,6 @@
+expected1,startPosition1,command1,expected2,startPosition2,command2
+1 3 N,1 2 N,LMLMLMLMM,4 2 N,1 1 E,MMMLM
+4 3 S,1 3 N,RMMMR,5 3 N,4 2 N,RMLM
+2 3 W,4 3 S,RMM,3 3 W,5 3 N,LMMM
+
+
