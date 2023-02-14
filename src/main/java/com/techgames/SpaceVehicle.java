@@ -1,8 +1,8 @@
 package com.techgames;
 
 public abstract class SpaceVehicle {
-    public String name;
-    public int[] position = {0,0};
+    protected String name;
+    protected int[] position = {0,0};
 
     public char face = ' ';
 
