@@ -90,7 +90,7 @@ public class Console {
         boolean start;
         String position, newPosition, plateauRange;
         String inputCommand;
-        boolean secondInput = false;
+        boolean addOre = false;
         int x,y;
 
         Scanner scanner = new Scanner(System.in);
@@ -103,8 +103,11 @@ public class Console {
 
         x = Character.getNumericValue(plateauRange.charAt(0));
         y = Character.getNumericValue(plateauRange.charAt(2));
-        Plateau plateau = new Plateau (x,y);
+        if ((plateauRange.length() == 5) && (plateauRange.charAt(4) == 'P')){
+            addOre = true;
+        }
 
+        Plateau plateau = new Plateau (x,y, addOre);
 
         position = getRoverLandPosition(scanner, "M1");
         MarsRover marsRover1 = new MarsRover("M1", Character.getNumericValue(position.charAt(0)),
@@ -120,20 +123,21 @@ public class Console {
             //send command to Mars Rover & get the output
             inputCommand = getRoverCommand(scanner, "M1");
             newPosition = marsRover1.navigate(inputCommand, plateau);
-            System.out.println(ANSI_CYAN+"Mars Rover M1 has moved to ("+ newPosition + ")" + ANSI_RESET);
 
-            if (newPosition.equals("found")){
-                System.out.println(ANSI_RED+"Precious metal found !!!!! at ("+ newPosition + ")" + ANSI_RESET);
+            if (newPosition.substring(0,5).equals("found")){
+                System.out.println(ANSI_RED+"Precious metal !!!!!"+ newPosition + ANSI_RESET);
                 break;
             }
+            System.out.println(ANSI_CYAN+"Mars Rover M1 has moved to ("+ newPosition + ")" + ANSI_RESET);
 
             inputCommand = getRoverCommand(scanner, "M2");
             newPosition = marsRover2.navigate(inputCommand, plateau);
-            System.out.println(ANSI_PURPLE+"Mars Rover M2 has moved to ("+ newPosition + ")" + ANSI_RESET);
-            if (newPosition.equals("found")){
-                System.out.println(ANSI_RED+"Precious metal found !!!!! at ("+ newPosition + ")" + ANSI_RESET);
+
+            if (newPosition.substring(0,5).equals("found")){
+                System.out.println(ANSI_RED+"Precious metal  !!!!! "+ newPosition + ANSI_RESET);
                 break;
             }
+            System.out.println(ANSI_PURPLE+"Mars Rover M2 has moved to ("+ newPosition + ")" + ANSI_RESET);
             // Wait for next command
             System.out.println("Enter any key to continue or 'X' to stop");
             if (scanner.nextLine().equals("X")) {

@@ -11,21 +11,21 @@ public class MarsRoverTest {
     @Test
     public void chkRoverNavigation() {
         MarsRover marsRover = new MarsRover("M1", 1, 2,'N');
-        Plateau plateau = new Plateau (5,5);
+        Plateau plateau = new Plateau (5,5, false);
         assertEquals ("1 3 N", marsRover.navigate("LMLMLMLMM", plateau));
     }
 
     @Test
     public void chk2ndRoverNavigation() {
         MarsRover marsRover = new MarsRover("M2", 3, 3,'E');
-        Plateau plateau = new Plateau (5,5);
+        Plateau plateau = new Plateau (5,5, false);
         assertEquals ("5 1 E", marsRover.navigate("MMRMMRMRRM", plateau));
     }
 
     @Test
     public void chkCommandOutsideGrid() {
         MarsRover marsRover = new MarsRover("M1", 3, 3,'E');
-        Plateau plateau = new Plateau (5,5);
+        Plateau plateau = new Plateau (5,5, false);
         assertEquals ("5 3 E", marsRover.navigate("MMM", plateau));
     }
     //Unit test for one Rover
@@ -38,7 +38,7 @@ public class MarsRoverTest {
         int y = Character.getNumericValue(startPosition.charAt(2));
         char face = startPosition.charAt(4);
         MarsRover marsRover = new MarsRover("M1",x,y,face);
-        Plateau plateau = new Plateau (5,5);
+        Plateau plateau = new Plateau (5,5, false);
         //act by navigate and then assert
         assertEquals (expected, marsRover.navigate(command, plateau));
     }
@@ -58,7 +58,7 @@ public class MarsRoverTest {
         face = startPosition2.charAt(4);
         MarsRover marsRover2 = new MarsRover("M2",x,y,face);
 
-        Plateau plateau = new Plateau (5,5);
+        Plateau plateau = new Plateau (5,5, false);
         //act by navigate and then assert
         assertEquals (expected1, marsRover1.navigate(command1, plateau));
         assertEquals (expected2, marsRover2.navigate(command2, plateau));
@@ -66,7 +66,7 @@ public class MarsRoverTest {
 
     @Test
     public void chkRoversMoveAfterEachOther() {
-        Plateau plateau = new Plateau (5,5);
+        Plateau plateau = new Plateau (5,5, false);
         //land two rovers
         //rover 2 cannot move when rover1 is on its way
         //rover 2 can move when rover 1 has moved
@@ -79,9 +79,9 @@ public class MarsRoverTest {
         assertEquals ("3 5 N", marsRover2.navigate("MM", plateau));
     }
 
-    //@Test
+    @Test
     public void chkProbeTarge() {
-        Plateau plateau = new Plateau (5,5);
+        Plateau plateau = new Plateau (1,1,true);
 
         MarsRover marsRover = new MarsRover("M1",plateau.target[0], plateau.target[1],'N');
 

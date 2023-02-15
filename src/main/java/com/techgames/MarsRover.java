@@ -6,7 +6,8 @@ public class MarsRover extends SpaceVehicle {
    public MarsRover (String name, int x, int y, char direction) {
         super(name, x, y, direction);
    }
-    @Override public void rotate(char leftRight){
+   /*
+   @Override public void rotate(char leftRight){
         char curFace = this.face;
         switch (curFace) {
             case 'N':
@@ -38,7 +39,7 @@ public class MarsRover extends SpaceVehicle {
                 }
                 break;
         }
-   }
+   }*/
 
     @Override public void move(int count, Plateau plateau){
         char curFace = this.face;
@@ -78,9 +79,9 @@ public class MarsRover extends SpaceVehicle {
 
     public String probeTarget (Plateau plateau){
        if ((this.position[0] == plateau.target[0])&& (this.position[1] == plateau.target[1])) {
-           return "found";
+           return ("found Ore at ("+ String.valueOf(position[0])+","+ String.valueOf(position[1])+ ")") ;
        } else {
-           return "";
+           return "Nil";
         }
     }
     public boolean isSafePosition(int[] position, Plateau plateau){
@@ -101,10 +102,10 @@ public class MarsRover extends SpaceVehicle {
     }
     public String navigate(String input, Plateau plateau) {
 
-        String newPosition;
+        String newPosition, probeResult;
 
        //read each char of command to rotate or move step
-        //System.out.println(String.valueOf(position[0]) + " " + String.valueOf(position[1]) + " " + face);
+
         for (int i=0; i< input.length(); i++ ) {
             switch (input.charAt(i)){
                 case 'L','R':
@@ -114,8 +115,9 @@ public class MarsRover extends SpaceVehicle {
                     move(1, plateau);
                     break;
             }
-            if (probeTarget(plateau).equals("found")){
-                return "found";
+            probeResult = probeTarget(plateau);
+            if (!probeResult.equals("Nil")){
+                return probeResult;
             }
         }
         //get the new position and direction of Rover
