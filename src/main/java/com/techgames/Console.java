@@ -9,6 +9,33 @@ public class Console {
     public static final String ANSI_PURPLE = "\u001B[45m";
     public static final String ANSI_RED = "\u001B[41m";
     public static final String ANSI_CYAN = "\u001B[46m";
+
+    public static final int MaxiumnX =100;
+    public static final int MaxiumnY =100;
+
+    private static boolean isValidPlateauSize (String[] data){
+        int numOfData = data.length;
+        if (numOfData > 3){
+            return false;
+        }
+        try {
+            int x = Integer.parseInt(data[0]);
+            int y = Integer.parseInt(data[1]);
+
+            if ((x <0 ) || (x > MaxiumnX) ||(y<0) ||(y>MaxiumnY)) {
+                return false;
+            }
+        } catch(NumberFormatException nfe) {
+            return false;
+        }
+        if (numOfData == 3){
+            if (!data[numOfData-1].equals("P")) {
+            //    System.out.println("err");
+                return false;
+            }
+        }
+        return true;
+    }
     private static boolean isValidPosition (String input){
         if (input == null) {
             return false;
@@ -53,8 +80,10 @@ public class Console {
         do {
             if (name.equals("M1")){
                 System.out.println(ANSI_CYAN+"Please enter the position to land the Rover M1:"+ANSI_RESET);
-            } else {
+            } else if (name.equals("M2")) {
                 System.out.println(ANSI_PURPLE+"Please enter the position to land the Rover M2:"+ANSI_RESET);
+            } else if (name.equals("Bumble-A")) {
+                System.out.println(ANSI_YELLOW+"Please enter the position to land BumbleBee:"+ANSI_RESET);
             }
 
             position = scanner.nextLine();
@@ -73,8 +102,10 @@ public class Console {
         do {
             if (name.equals("M1")){
                 System.out.println(ANSI_CYAN +"Enter navigation command for M1:"+ANSI_RESET);
-            } else {
+            } else if (name.equals("M2")){
                 System.out.println(ANSI_PURPLE+"Enter navigation command for M2:"+ANSI_RESET);
+            } if (name.equals("Bumble-A")) {
+                System.out.println(ANSI_YELLOW+"Enter navigation command for BumbleBee:"+ANSI_RESET);
             }
             inputCommand = scanner.nextLine();
             if (!isValidCommand(inputCommand)){
@@ -90,8 +121,10 @@ public class Console {
         boolean start;
         String position, newPosition, plateauRange;
         String inputCommand;
+        boolean validPlateau = false;
         boolean addOre = false;
-        int x,y;
+        int x =0;
+        int y =0;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -99,13 +132,24 @@ public class Console {
         System.out.println("* MARS SPECIAL MISSION - PRECIOUS ROCK SEARCH *");
         System.out.println("***********************************************");
         System.out.println("Commander, please enter the plateau range (coorindate) for this mission:");
-        plateauRange = scanner.nextLine();
 
-        x = Character.getNumericValue(plateauRange.charAt(0));
-        y = Character.getNumericValue(plateauRange.charAt(2));
-        if ((plateauRange.length() == 5) && (plateauRange.charAt(4) == 'P')){
-            addOre = true;
-        }
+        do {
+            plateauRange = scanner.nextLine();
+            if (plateauRange != null) {
+                String[] data = plateauRange.split(" ");
+                if (isValidPlateauSize(data)) {
+                    x = Integer.parseInt(data[0]);
+                    y = Integer.parseInt(data[1]);
+                    if ((data.length == 3) && (data[2].equals("P"))) {
+                        addOre = true;
+                    }
+                    validPlateau = true;
+                    break;
+                } else {
+                    System.out.println("?? Invalid plateau size - enter again:");
+                }
+            }
+        } while (!validPlateau);
 
         Plateau plateau = new Plateau (x,y, addOre);
 
@@ -139,12 +183,36 @@ public class Console {
             }
             System.out.println(ANSI_PURPLE+"Mars Rover M2 has moved to ("+ newPosition + ")" + ANSI_RESET);
             // Wait for next command
-            System.out.println("Enter any key to continue or 'X' to stop");
-            if (scanner.nextLine().equals("X")) {
+            System.out.println("Enter any key to continue with Rover, 'B' to lanuch BumbleBee, or 'X' to stop");
+            switch (scanner.nextLine()) {
+                case "X":
+                    start = false;
+                    System.out.println("You will now disconnect with Rovers..bye bye");
+                    break;
+                case "B":
+                    System.out.println("...Calling BumbleBee to land... he has DOUBLE power to move 2 Grid each step!!!");
+
+                    position = getRoverLandPosition(scanner, "Bumble-A");
+                    BumbleBee bumbleBee = new BumbleBee("Bumble-A", Character.getNumericValue(position.charAt(0)),
+                            Character.getNumericValue(position.charAt(2)), position.charAt(4) );
+                    inputCommand = getRoverCommand(scanner, "Bumble-A");
+                    newPosition = bumbleBee.navigate(inputCommand, plateau);
+                    if (newPosition.substring(0,5).equals("found")){
+                        System.out.println(ANSI_RED+"BumbleBee -> Precious metal !!!!!"+ newPosition + ANSI_RESET);
+                        break;
+                    }
+                    System.out.println(ANSI_YELLOW+"BumbleBee has moved to ("+ newPosition + ")" + ANSI_RESET);
+                    System.out.println(ANSI_YELLOW+"**** BumbleBee is leaving.. continue with Rovers ..." + ANSI_RESET);
+                    break;
+                default:
+                    break;
+            }
+
+            /*if (scanner.nextLine().equals("X")) {
                 start = false;
                 System.out.println("You will now disconnect with Rovers..bye bye");
                 break;
-            }
+            }*/
         }
 
     }

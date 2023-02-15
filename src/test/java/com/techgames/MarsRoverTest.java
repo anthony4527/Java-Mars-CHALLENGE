@@ -99,4 +99,13 @@ public class MarsRoverTest {
                 bumbleBee.face;
         assertEquals ("0 3 N",bPos );
     }
+
+    @Test
+    public void testBumbleeNavigateProbe() {
+        Plateau plateau = new Plateau (5,5,false);
+
+        BumbleBee bumbleBee = new BumbleBee("BeeA",1, 0 ,'N');
+
+        assertEquals ("5 2 N",        bumbleBee.navigate("RMMLM",plateau) );
+    }
 }

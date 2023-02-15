@@ -42,9 +42,14 @@ public class BumbleBee extends SpaceVehicle {
                     String.valueOf(position[0]) + "," + String.valueOf(position[1]) + ")");
         }
     }
-    public String probeTarget (Plateau plateau){
-        return "";
 
+    public String probeTarget (Plateau plateau){
+        if ((this.position[0] == plateau.target[0])&& (this.position[1] == plateau.target[1])) {
+            return ("found Ore at ("+ String.valueOf(position[0])+","+ String.valueOf(position[1])+ ") by BumbleBee") ;
+        } else {
+            return "Nil";
+        }
     }
+
 
 }

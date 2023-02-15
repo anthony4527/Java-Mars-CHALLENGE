@@ -102,6 +102,7 @@ public class MarsRover extends SpaceVehicle {
         return true;
     }*/
 
+    /*
     public String navigate(String input, Plateau plateau) {
 
         String newPosition, probeResult;
@@ -126,5 +127,5 @@ public class MarsRover extends SpaceVehicle {
         newPosition = String.valueOf(position[0]) + " " + String.valueOf(position[1]) + " " + face;
 
         return newPosition;
-    }
+    }*/
 }
