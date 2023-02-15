@@ -53,9 +53,9 @@ public abstract class SpaceVehicle {
                 break;
         }
     }
-    public abstract void move(int count, Plateau plateau);  //method to move on a plateau object
+    public abstract void move(int count, RectPlateau plateau);  //method to move on a plateau object
 
-    public String navigate(String input, Plateau plateau) {
+    public String navigate(String input, RectPlateau plateau) {
         String newPosition, probeResult;
 
         //read each char of command to rotate or move step
@@ -77,5 +77,5 @@ public abstract class SpaceVehicle {
         newPosition = String.valueOf(position[0]) + " " + String.valueOf(position[1]) + " " + face;
         return newPosition;
     }
-    public abstract String probeTarget(Plateau plateau);
+    public abstract String probeTarget(RectPlateau plateau);
 }

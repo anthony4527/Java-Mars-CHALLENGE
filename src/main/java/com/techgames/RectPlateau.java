@@ -3,13 +3,13 @@ package com.techgames;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Plateau implements MarsPlateau {
+public class RectPlateau implements MarsPlateau {
 
     private int[] origin = {0,0};
     private int[] range = {0,0};
     protected int[] target = {-1,-1};
     ArrayList<int[]> gridInuse = new ArrayList<int[]>();
-    public Plateau(int x, int y, boolean hasPreciousMetal) {
+    public RectPlateau(int x, int y, boolean hasPreciousMetal) {
         this.range[0] =x;
         this.range[1] = y;
         //if this plateau is marked with special materal, generate random no. where special material is kept

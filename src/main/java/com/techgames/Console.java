@@ -153,7 +153,7 @@ public class Console {
             }
         } while (!validPlateau);
 
-        Plateau plateau = new Plateau (xRange,yRange, addOre);
+        RectPlateau plateau = new RectPlateau (xRange,yRange, addOre);
 
         position = getRoverLandPosition(scanner, "M1", xRange, yRange);
         // parse position to get x, y and face direction
