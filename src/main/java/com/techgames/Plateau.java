@@ -3,7 +3,7 @@ package com.techgames;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Plateau {
+public class Plateau implements MarsPlateau {
 
     private int[] origin = {0,0};
     private int[] range = {0,0};

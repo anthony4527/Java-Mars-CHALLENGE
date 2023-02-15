@@ -65,7 +65,7 @@ public class MarsRoverTest {
     }
 
     @Test
-    public void chkRoversMoveAfterEachOther() {
+    public void chkRoversAvoidCollision() {
         Plateau plateau = new Plateau (5,5, false);
         //land two rovers
         //rover 2 cannot move when rover1 is on its way
@@ -73,6 +73,8 @@ public class MarsRoverTest {
         MarsRover marsRover1 = new MarsRover("M1", 3, 3,'N');
         MarsRover marsRover2 = new MarsRover("M2", 3, 2,'N');
         assertEquals ("3 4 N", marsRover1.navigate("M", plateau));
+        //the next test -rover 2 move 1 step north from (3,2) to (3,3);
+        // next  step will check rover1 is in (3,4),and rover2 will alert and stay at (3,3) to avoid collision
         assertEquals ("3 3 N", marsRover2.navigate("MMM", plateau));
         //rover 2 can move when rover 1 has moved
         assertEquals ("4 4 E", marsRover1.navigate("RM", plateau));

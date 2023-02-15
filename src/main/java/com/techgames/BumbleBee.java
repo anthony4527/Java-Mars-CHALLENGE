@@ -28,8 +28,6 @@ public class BumbleBee extends SpaceVehicle {
                 targetPosition[0] -= count*POWER;
                 break;
         }
-        this.position[0] = targetPosition[0];
-        this.position[1] = targetPosition[1];
         if (plateau.isSafePosition(targetPosition)) {
             //remove in-use state of current plateau location
             plateau.clearInuse(this.position[0],this.position[1]);

@@ -219,11 +219,6 @@ public class Console {
                     break;
             }
 
-            /*if (scanner.nextLine().equals("X")) {
-                start = false;
-                System.out.println("You will now disconnect with Rovers..bye bye");
-                break;
-            }*/
         }
 
     }
