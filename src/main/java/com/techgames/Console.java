@@ -36,7 +36,7 @@ public class Console {
         }
         return true;
     }
-    private static boolean isValidPosition (String input){
+    private static boolean isValidPosition (String input, int maxX, int maxY){
         if (input == null) {
             return false;
         }
@@ -48,7 +48,7 @@ public class Console {
         try {
             int x = Integer.parseInt(data[0]);
             int y = Integer.parseInt(data[1]);
-            if ((x <0 ) || (x >9) ||(y<0) ||(y>9)) {
+            if ((x <0 ) || (x > maxX) ||(y<0) ||(y> maxY)) {
                 return false;
             }
         } catch(NumberFormatException nfe) {
@@ -74,7 +74,7 @@ public class Console {
         return true;
     }
 
-    private static String getRoverLandPosition(Scanner scanner, String name){
+    private static String getRoverLandPosition(Scanner scanner, String name, int maxX, int maxY){
         boolean firstInput = false;
         String position;
         do {
@@ -87,7 +87,7 @@ public class Console {
             }
 
             position = scanner.nextLine();
-            if (!isValidPosition(position)){
+            if (!isValidPosition(position, maxX, maxY)){
                 System.out.println ("??? Not valid input");
             }  else {
                 firstInput = true;
@@ -123,8 +123,10 @@ public class Console {
         String inputCommand;
         boolean validPlateau = false;
         boolean addOre = false;
-        int x =0;
-        int y =0;
+        int xRange =0;
+        int yRange =0;
+        String[] landPosition;
+        int landX, landY;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -138,8 +140,8 @@ public class Console {
             if (plateauRange != null) {
                 String[] data = plateauRange.split(" ");
                 if (isValidPlateauSize(data)) {
-                    x = Integer.parseInt(data[0]);
-                    y = Integer.parseInt(data[1]);
+                    xRange = Integer.parseInt(data[0]);
+                    yRange = Integer.parseInt(data[1]);
                     if ((data.length == 3) && (data[2].equals("P"))) {
                         addOre = true;
                     }
@@ -151,15 +153,20 @@ public class Console {
             }
         } while (!validPlateau);
 
-        Plateau plateau = new Plateau (x,y, addOre);
+        Plateau plateau = new Plateau (xRange,yRange, addOre);
 
-        position = getRoverLandPosition(scanner, "M1");
-        MarsRover marsRover1 = new MarsRover("M1", Character.getNumericValue(position.charAt(0)),
-                Character.getNumericValue(position.charAt(2)), position.charAt(4) );
+        position = getRoverLandPosition(scanner, "M1", xRange, yRange);
+        // parse position to get x, y and face direction
+        landPosition = position.split(" ");
+        landX = Integer.parseInt(landPosition[0]);
+        landY = Integer.parseInt(landPosition[1]);
+        MarsRover marsRover1 = new MarsRover("M1", landX, landY, landPosition[2].charAt(0) );
 
-        position = getRoverLandPosition(scanner, "M2");
-        MarsRover marsRover2 = new MarsRover("M2", Character.getNumericValue(position.charAt(0)),
-                Character.getNumericValue(position.charAt(2)), position.charAt(4) );
+        position = getRoverLandPosition(scanner, "M2", xRange, yRange);
+        landPosition = position.split(" ");
+        landX = Integer.parseInt(landPosition[0]);
+        landY = Integer.parseInt(landPosition[1]);
+        MarsRover marsRover2 = new MarsRover("M2", landX, landY, landPosition[2].charAt(0)  );
 
         start = true;
         while (start == true ){
@@ -192,9 +199,13 @@ public class Console {
                 case "B":
                     System.out.println("...Calling BumbleBee to land... he has DOUBLE power to move 2 Grid each step!!!");
 
-                    position = getRoverLandPosition(scanner, "Bumble-A");
-                    BumbleBee bumbleBee = new BumbleBee("Bumble-A", Character.getNumericValue(position.charAt(0)),
-                            Character.getNumericValue(position.charAt(2)), position.charAt(4) );
+                    position = getRoverLandPosition(scanner, "Bumble-A",xRange, yRange);
+                    landPosition = position.split(" ");
+                    landX = Integer.parseInt(landPosition[0]);
+                    landY = Integer.parseInt(landPosition[1]);
+
+                    BumbleBee bumbleBee = new BumbleBee("Bumble-A",landX, landY, landPosition[2].charAt(0)  );
+
                     inputCommand = getRoverCommand(scanner, "Bumble-A");
                     newPosition = bumbleBee.navigate(inputCommand, plateau);
                     if (newPosition.substring(0,5).equals("found")){
