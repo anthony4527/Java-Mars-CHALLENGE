@@ -13,9 +13,7 @@ public class MarsRover extends SpaceVehicle {
         int[] targetPosition = {this.position[0], this.position[1] };
 
         switch (curFace) {
-            // if step in faced direction is within plateau, then move else stay
             // get the target position by case of current facing direction
-            // if target position is boundary or occupied, do not move
             case 'N':
                 targetPosition[1] += count;
                 break;
@@ -29,6 +27,7 @@ public class MarsRover extends SpaceVehicle {
                 targetPosition[0] -= count;
                 break;
         }
+        // if target position is boundary or occupied, do not move
         if (plateau.isSafePosition(targetPosition)) {
             //remove in-use state of current plateau location
             plateau.clearInuse(this.position[0],this.position[1]);

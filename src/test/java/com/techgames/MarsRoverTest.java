@@ -87,7 +87,7 @@ public class MarsRoverTest {
 
         MarsRover marsRover = new MarsRover("M1",plateau.target[0], plateau.target[1],'N');
 
-        assertEquals ("found", marsRover.probeTarget(plateau));
+        assertEquals ("found", (marsRover.navigate("MRMRMRM", plateau)).substring(0,5));
     }
     @Test
     public void detectIncorrectCommand(){

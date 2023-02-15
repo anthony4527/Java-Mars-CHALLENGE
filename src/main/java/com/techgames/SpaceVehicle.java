@@ -1,10 +1,11 @@
 package com.techgames;
 
 public abstract class SpaceVehicle {
+
     protected String name;
     protected int[] position = {0,0};
 
-    public char face = ' ';
+    protected char face = ' ';
 
     public SpaceVehicle(String name, int x, int y, char face) {
         this.name = name;
@@ -22,6 +23,7 @@ public abstract class SpaceVehicle {
     // empty method for implementation
     public void rotate(char leftRight) {
         char curFace = this.face;
+
         switch (curFace) {
             case 'N':
                 if (leftRight == 'R'){
