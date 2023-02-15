@@ -64,7 +64,7 @@ public class MarsRover extends SpaceVehicle {
                 targetPosition[0] -= count;
                 break;
         }
-        if (isSafePosition(targetPosition, plateau)) {
+        if (plateau.isSafePosition(targetPosition)) {
             //remove in-use state of current plateau location
             plateau.clearInuse(this.position[0],this.position[1]);
             this.position[0] = targetPosition[0];
@@ -84,6 +84,7 @@ public class MarsRover extends SpaceVehicle {
            return "Nil";
         }
     }
+    /*
     public boolean isSafePosition(int[] position, Plateau plateau){
        int tmp[] = {-1,-1};
 
@@ -99,7 +100,8 @@ public class MarsRover extends SpaceVehicle {
             return false;
         }
         return true;
-    }
+    }*/
+
     public String navigate(String input, Plateau plateau) {
 
         String newPosition, probeResult;

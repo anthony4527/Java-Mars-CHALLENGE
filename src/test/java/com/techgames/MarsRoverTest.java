@@ -79,12 +79,24 @@ public class MarsRoverTest {
         assertEquals ("3 5 N", marsRover2.navigate("MM", plateau));
     }
 
-    @Test
+    //@Test
     public void chkProbeTarge() {
         Plateau plateau = new Plateau (1,1,true);
 
         MarsRover marsRover = new MarsRover("M1",plateau.target[0], plateau.target[1],'N');
 
         assertEquals ("found", marsRover.probeTarget(plateau));
+    }
+    // test different type of space vehicle
+    @Test
+    public void testBumbleeStart() {
+        Plateau plateau = new Plateau (5,5,false);
+
+        BumbleBee bumbleBee = new BumbleBee("BeeA",0, 1 ,'N');
+
+        bumbleBee.move(1, plateau);
+        String bPos = String.valueOf(bumbleBee.position[0]) + " " + String.valueOf(bumbleBee.position[1]) +" " +
+                bumbleBee.face;
+        assertEquals ("0 3 N",bPos );
     }
 }

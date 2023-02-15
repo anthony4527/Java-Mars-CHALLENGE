@@ -45,4 +45,22 @@ public class Plateau {
             } while(i < gridInuse.size());
         }
     }
+
+    public boolean isSafePosition (int[] position){
+        int tmp[] = {-1,-1};
+
+        for (int i= 0; i< gridInuse.size(); i++) {
+            tmp = gridInuse.get(i);
+            if ((position[0]== tmp[0]) && (position[1] == tmp[1])){
+                return false;
+            }
+        }
+        tmp = getRange();
+        //if positon is outside plateau range, return not safe
+        if ((position[0] <0 ) || (position[0]> tmp[0]) || (position[1] <0 ) || (position[1]> tmp[1])) {
+            return false;
+        }
+        return true;
+    }
+
 }
