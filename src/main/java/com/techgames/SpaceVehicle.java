@@ -67,6 +67,9 @@ public abstract class SpaceVehicle {
                 case 'M':
                     move(1, plateau);
                     break;
+                default: // if not above character, reject the command
+                    System.out.println("invalid command!!");
+                    return  "-1";
             }
             probeResult = probeTarget(plateau);
             if (!probeResult.equals("Nil")){

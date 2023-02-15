@@ -81,7 +81,7 @@ public class MarsRoverTest {
         assertEquals ("3 5 N", marsRover2.navigate("MM", plateau));
     }
 
-    //@Test
+    @Test
     public void chkProbeTarge() {
         RectPlateau plateau = new RectPlateau (1,1,true);
 
@@ -89,7 +89,14 @@ public class MarsRoverTest {
 
         assertEquals ("found", marsRover.probeTarget(plateau));
     }
-    // test different type of space vehicle
+    @Test
+    public void detectIncorrectCommand(){
+        MarsRover marsRover = new MarsRover("M1", 3, 3,'E');
+        RectPlateau plateau = new RectPlateau (5,5, false);
+        assertEquals ("-1", marsRover.navigate("MM@M", plateau));
+    }
+
+    // test different type of space vehicle - bumbleBee move 2 grids each command
     @Test
     public void testBumbleeStart() {
         RectPlateau plateau = new RectPlateau (5,5,false);
