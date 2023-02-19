@@ -7,23 +7,23 @@ public class MarsRover extends SpaceVehicle {
    }
 
     @Override public void move(int count, RectPlateau plateau){
-        char curFace = this.face;
+        DIRECTION curFace = this.face;
         int boundary[] = plateau.getRange();
 
         int[] targetPosition = {this.position[0], this.position[1] };
 
         switch (curFace) {
             // get the target position by case of current facing direction
-            case 'N':
+            case NORTH:
                 targetPosition[1] += count;
                 break;
-            case 'E':
+            case EAST:
                 targetPosition[0] += count;
                 break;
-            case 'S':
+            case SOUTH:
                 targetPosition[1] -= count;
                 break;
-            case 'W':
+            case WEST:
                 targetPosition[0] -= count;
                 break;
         }

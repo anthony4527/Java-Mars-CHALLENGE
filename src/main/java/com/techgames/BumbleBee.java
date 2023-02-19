@@ -9,22 +9,22 @@ public class BumbleBee extends SpaceVehicle {
     }
 
     public void move(int count, RectPlateau plateau){
-        char curFace = this.face;
+        DIRECTION curFace = this.face;
         int boundary[] = plateau.getRange();
 
         int[] targetPosition = {this.position[0], this.position[1] };
 
         switch (curFace) {
-            case 'N':
+            case NORTH:
                 targetPosition[1] += count*POWER;
                 break;
-            case 'E':
+            case EAST:
                 targetPosition[0] += count*POWER;
                 break;
-            case 'S':
+            case SOUTH:
                 targetPosition[1] -= count*POWER;
                 break;
-            case 'W':
+            case WEST:
                 targetPosition[0] -= count*POWER;
                 break;
         }

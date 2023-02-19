@@ -160,13 +160,16 @@ public class Console {
         landPosition = position.split(" ");
         landX = Integer.parseInt(landPosition[0]);
         landY = Integer.parseInt(landPosition[1]);
+        //DIRECTION face = DIRECTION.getDirection(landPosition[2].charAt(0));
         MarsRover marsRover1 = new MarsRover("M1", landX, landY, landPosition[2].charAt(0) );
 
         position = getRoverLandPosition(scanner, "M2", xRange, yRange);
         landPosition = position.split(" ");
         landX = Integer.parseInt(landPosition[0]);
         landY = Integer.parseInt(landPosition[1]);
-        MarsRover marsRover2 = new MarsRover("M2", landX, landY, landPosition[2].charAt(0)  );
+        //DIRECTION face2 = DIRECTION.getDirection(landPosition[2].charAt(0));
+
+        MarsRover marsRover2 = new MarsRover("M2", landX, landY, landPosition[2].charAt(0) );
 
         start = true;
         while (start == true ){
@@ -204,6 +207,7 @@ public class Console {
                     landX = Integer.parseInt(landPosition[0]);
                     landY = Integer.parseInt(landPosition[1]);
 
+                    //DIRECTION face3 = DIRECTION.getDirection(landPosition[2].charAt(0));
                     BumbleBee bumbleBee = new BumbleBee("Bumble-A",landX, landY, landPosition[2].charAt(0)  );
 
                     inputCommand = getRoverCommand(scanner, "Bumble-A");

@@ -105,7 +105,7 @@ public class MarsRoverTest {
 
         bumbleBee.move(1, plateau);
         String bPos = String.valueOf(bumbleBee.position[0]) + " " + String.valueOf(bumbleBee.position[1]) +" " +
-                bumbleBee.face;
+                bumbleBee.face.compass;
         assertEquals ("0 3 N",bPos );
     }
 
@@ -116,5 +116,34 @@ public class MarsRoverTest {
         BumbleBee bumbleBee = new BumbleBee("BeeA",1, 0 ,'N');
 
         assertEquals ("5 2 N",        bumbleBee.navigate("RMMLM",plateau) );
+    }
+
+
+    @Test
+    public void checkDirectionCommand (){
+//        Direction myDirection = new Direction();
+        //direction.curFace = DIRECTION.NORTH;
+        assertEquals(DIRECTION.WEST, DIRECTION.rotateLeft(DIRECTION.NORTH) );
+        assertEquals(DIRECTION.SOUTH, DIRECTION.rotateLeft(DIRECTION.WEST) );
+        assertEquals(DIRECTION.EAST, DIRECTION.rotateLeft(DIRECTION.SOUTH) );
+        assertEquals(DIRECTION.NORTH, DIRECTION.rotateLeft(DIRECTION.EAST) );
+
+
+    }
+
+    @Test
+    public void TestLeftTurn(){
+        MarsRover marsRover = new MarsRover("M1", 3, 3,'E');
+        RectPlateau plateau = new RectPlateau (5,5, false);
+        assertEquals ("3 3 N", marsRover.navigate("L", plateau));
+
+    }
+
+    @Test
+    public void TestRightTurn(){
+        MarsRover marsRover = new MarsRover("M1", 3, 3,'E');
+        RectPlateau plateau = new RectPlateau (5,5, false);
+        assertEquals ("3 3 S", marsRover.navigate("R", plateau));
+
     }
 }
