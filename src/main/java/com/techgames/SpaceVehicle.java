@@ -25,13 +25,17 @@ public abstract class SpaceVehicle {
 //    public abstract void move(int count, RectPlateau plateau);  //method to move on a plateau object
 
     public String navigate(String input, RectPlateau plateau) {
-        String newPosition, probeResult;
+        String newPosition;
+        String probeResult = "";
 
         LeftCommand leftCommand = new LeftCommand(this);
         RightCommand rightCommand = new RightCommand(this);
         MoveCommand moveCommand = new MoveCommand(this, plateau);
+        RoverProbe roverProbe = new RoverProbe(this, plateau);
+
         //read each char of command to rotate or move step
-        for (int i=0; i< input.length(); i++ ) {
+        int i = 0;
+        do {
             switch (input.charAt(i)){
                 case 'L':
                     leftCommand.execute();
@@ -46,14 +50,23 @@ public abstract class SpaceVehicle {
                     System.out.println("invalid command!!");
                     return  "-1";
             }
-            probeResult = probeTarget(plateau);
-            if (!probeResult.equals("Nil")){
-                return probeResult;
+            //detect if the plateau new position has special material and return "found message" if yes
+            probeResult = roverProbe.probeTarget();
+            //System.out.println ("probe is "+ probeResult);
+            if (!probeResult.equals("")) {
+                break;
             }
-        }
+            i++;
+
+        } while (i< input.length());
+
         //get the new position and direction of Rover
         newPosition = String.valueOf(position[0]) + " " + String.valueOf(position[1]) + " " + face.compass;
-        return newPosition;
+        if (!probeResult.equals(null)) {
+            return (probeResult + newPosition) ;
+        } else {
+            return newPosition;
+        }
     }
-    public abstract String probeTarget(RectPlateau plateau);
+//    public abstract String probeTarget(RectPlateau plateau);
 }

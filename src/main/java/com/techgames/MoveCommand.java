@@ -8,11 +8,11 @@ public class MoveCommand {
         this.rover = rover;
         this.plateau = plateau;
     }
-    public void execute(){
+    public void execute() {
         DIRECTION curFace = this.rover.face;
         int boundary[] = this.plateau.getRange();
 
-        int[] targetPosition = {this.rover.position[0], this.rover.position[1] };
+        int[] targetPosition = {this.rover.position[0], this.rover.position[1]};
 
         switch (curFace) {
             // get the target position by case of current facing direction
@@ -32,14 +32,14 @@ public class MoveCommand {
         // if target position is boundary or occupied, do not move
         if (this.plateau.isSafePosition(targetPosition)) {
             //remove in-use state of current plateau location
-            plateau.clearInuse(this.rover.position[0],this.rover.position[1]);
+            plateau.clearInuse(this.rover.position[0], this.rover.position[1]);
             this.rover.position[0] = targetPosition[0];
             this.rover.position[1] = targetPosition[1];
             //set in-use state of location of new position
-            this.plateau.setInuse(this.rover.position[0],this.rover.position[1]);
+            this.plateau.setInuse(this.rover.position[0], this.rover.position[1]);
         } else {
-            System.out.println("Cannot move - boundary or occupied or hazard!!Stay at position ("+
-                    String.valueOf(this.rover.position[0])+","+String.valueOf(this.rover.position[1])+")");
+            System.out.println("Cannot move - boundary or occupied or hazard!!Stay at position (" +
+                    String.valueOf(this.rover.position[0]) + "," + String.valueOf(this.rover.position[1]) + ")");
         }
     }
 }

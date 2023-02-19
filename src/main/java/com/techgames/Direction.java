@@ -17,23 +17,23 @@ enum DIRECTION{
         return null;
     }
     public static DIRECTION rotateLeft(DIRECTION curFace){
-        switch (curFace) {
-            case NORTH: return DIRECTION.WEST;
-            case EAST: return DIRECTION.NORTH;
-            case SOUTH: return DIRECTION.EAST;
-            case WEST: return DIRECTION.SOUTH;
-            default:return curFace;
-        }
+        return switch (curFace) {
+                    case NORTH -> DIRECTION.WEST;
+                    case EAST -> DIRECTION.NORTH;
+                    case SOUTH -> DIRECTION.EAST;
+                    case WEST -> DIRECTION.SOUTH;
+                    default -> curFace;
+                };
     }
 
     public static DIRECTION rotateRight(DIRECTION curFace){
-        switch (curFace) {
-            case NORTH: return DIRECTION.EAST;
-            case EAST: return DIRECTION.SOUTH;
-            case SOUTH: return DIRECTION.WEST;
-            case WEST: return DIRECTION.NORTH;
-            default:return curFace;
-        }
+         return switch(curFace) {
+            case NORTH ->DIRECTION.EAST;
+            case EAST -> DIRECTION.SOUTH;
+            case SOUTH -> DIRECTION.WEST;
+            case WEST -> DIRECTION.NORTH;
+            default -> curFace;
+         };
     }
 }
 
