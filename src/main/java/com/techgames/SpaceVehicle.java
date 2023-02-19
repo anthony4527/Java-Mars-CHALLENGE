@@ -22,13 +22,14 @@ public abstract class SpaceVehicle {
         return this.face;
     }
 
-    public abstract void move(int count, RectPlateau plateau);  //method to move on a plateau object
+//    public abstract void move(int count, RectPlateau plateau);  //method to move on a plateau object
 
     public String navigate(String input, RectPlateau plateau) {
         String newPosition, probeResult;
 
         LeftCommand leftCommand = new LeftCommand(this);
         RightCommand rightCommand = new RightCommand(this);
+        MoveCommand moveCommand = new MoveCommand(this, plateau);
         //read each char of command to rotate or move step
         for (int i=0; i< input.length(); i++ ) {
             switch (input.charAt(i)){
@@ -39,7 +40,7 @@ public abstract class SpaceVehicle {
                     rightCommand.execute();
                     break;
                 case 'M':
-                    move(1, plateau);
+                    moveCommand.execute();
                     break;
                 default: // if not above character, reject the command
                     System.out.println("invalid command!!");

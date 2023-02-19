@@ -3,6 +3,8 @@ package com.techgames;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -103,10 +105,11 @@ public class MarsRoverTest {
 
         BumbleBee bumbleBee = new BumbleBee("BeeA",0, 1 ,'N');
 
-        bumbleBee.move(1, plateau);
+        MoveCommand moveCommand = new MoveCommand(bumbleBee, plateau);
+        bumbleBee.navigate("M", plateau);
         String bPos = String.valueOf(bumbleBee.position[0]) + " " + String.valueOf(bumbleBee.position[1]) +" " +
                 bumbleBee.face.compass;
-        assertEquals ("0 3 N",bPos );
+        assertEquals ("0 2 N",bPos );
     }
 
     @Test
@@ -115,7 +118,7 @@ public class MarsRoverTest {
 
         BumbleBee bumbleBee = new BumbleBee("BeeA",1, 0 ,'N');
 
-        assertEquals ("5 2 N",        bumbleBee.navigate("RMMLM",plateau) );
+        assertEquals ("3 1 N",        bumbleBee.navigate("RMMLM",plateau) );
     }
 
 
@@ -146,4 +149,25 @@ public class MarsRoverTest {
         assertEquals ("3 3 S", marsRover.navigate("R", plateau));
 
     }
+
+    @Test
+    public void TestRoverMove(){
+        MarsRover marsRover = new MarsRover("M1", 3, 3,'E');
+        RectPlateau plateau = new RectPlateau (5,5, false);
+        assertEquals ("4 3 E", marsRover.navigate("M", plateau));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"3 3 S,M,3 2 S","3 3 W,M,2 3 W","3 3 N,M,3 4 N","3 3 E,M,4 3 E"})
+
+    public void TestMoveParameters(String startPos, String action, String expected){
+        int x = Character.getNumericValue(startPos.charAt(0));
+        int y = Character.getNumericValue(startPos.charAt(2));
+        char face = startPos.charAt(4);
+
+        MarsRover marsRover = new MarsRover("M1", x, y, face);
+        RectPlateau plateau = new RectPlateau (5,5, false);
+        assertEquals (expected, marsRover.navigate(action, plateau));
+    }
+
 }
