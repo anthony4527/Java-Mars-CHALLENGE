@@ -3,7 +3,7 @@ package com.techgames;
 enum DIRECTION{
     NORTH('N'), EAST('E'), SOUTH('S'), WEST('W');
 
-    public char compass;
+    protected char compass;
     private DIRECTION(char compass) {
         this.compass = compass;
     }

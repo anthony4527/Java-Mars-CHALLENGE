@@ -30,14 +30,14 @@ public abstract class SpaceVehicle {
         String newPosition;
         String probeResult = "";
 
-        HashMap<String, ICommand> commands = new HashMap<String, ICommand>();
+        HashMap<COMMAND, ICommand> commands = new HashMap<COMMAND, ICommand>();
         LeftCommand leftCommand = new LeftCommand(this);
         RightCommand rightCommand = new RightCommand(this);
         MoveCommand moveCommand = new MoveCommand(this, plateau);
-        commands.put("L", leftCommand);
+        commands.put(COMMAND.LEFT, leftCommand);
 
-        commands.put("R", rightCommand);
-        commands.put("M", moveCommand);
+        commands.put(COMMAND.RIGHT, rightCommand);
+        commands.put(COMMAND.MOVE, moveCommand);
 
 
         RoverProbe roverProbe = new RoverProbe(this, plateau);
@@ -45,7 +45,7 @@ public abstract class SpaceVehicle {
         //read each char of command to rotate or move step
         int i = 0;
         do {
-            ICommand command = commands.get(String.valueOf(input.charAt(i)));
+            ICommand command = commands.get(COMMAND.getCommand(input.charAt(i)));
             if (command == null){
                 return "-1";
             } else {
