@@ -3,7 +3,6 @@ package com.techgames;
 import java.util.HashMap;
 
 public abstract class SpaceVehicle {
-
     protected String name;
     protected int[] position = {0,0};
 
@@ -14,7 +13,6 @@ public abstract class SpaceVehicle {
         this.position[0] = x;
         this.position[1] = y;
         this.face = DIRECTION.getDirection(face);
-        //this.face = face;
     }
     public int[] getPosition() {
         return this.position;
@@ -23,8 +21,6 @@ public abstract class SpaceVehicle {
     public DIRECTION getFace() {
         return this.face;
     }
-
-//    public abstract void move(int count, RectPlateau plateau);  //method to move on a plateau object
 
     public String navigate(String input, RectPlateau plateau) {
         String newPosition;
@@ -35,16 +31,14 @@ public abstract class SpaceVehicle {
         RightCommand rightCommand = new RightCommand(this);
         MoveCommand moveCommand = new MoveCommand(this, plateau);
         commands.put(COMMAND.LEFT, leftCommand);
-
         commands.put(COMMAND.RIGHT, rightCommand);
         commands.put(COMMAND.MOVE, moveCommand);
 
-
         RoverProbe roverProbe = new RoverProbe(this, plateau);
 
-        //read each char of command to rotate or move step
         int i = 0;
         do {
+            //read each char of command to rotate or move step, and execute
             ICommand command = commands.get(COMMAND.getCommand(input.charAt(i)));
             if (command == null){
                 return "-1";
@@ -53,7 +47,6 @@ public abstract class SpaceVehicle {
             }
             //detect if the plateau new position has special material and return "found message" if yes
             probeResult = roverProbe.probeTarget();
-            //System.out.println ("probe is "+ probeResult);
             if (!probeResult.equals("")) {
                 break;
             }
