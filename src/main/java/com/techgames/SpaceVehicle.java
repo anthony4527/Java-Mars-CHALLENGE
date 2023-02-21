@@ -1,5 +1,7 @@
 package com.techgames;
 
+import java.util.HashMap;
+
 public abstract class SpaceVehicle {
 
     protected String name;
@@ -28,27 +30,26 @@ public abstract class SpaceVehicle {
         String newPosition;
         String probeResult = "";
 
+        HashMap<String, ICommand> commands = new HashMap<String, ICommand>();
         LeftCommand leftCommand = new LeftCommand(this);
         RightCommand rightCommand = new RightCommand(this);
         MoveCommand moveCommand = new MoveCommand(this, plateau);
+        commands.put("L", leftCommand);
+
+        commands.put("R", rightCommand);
+        commands.put("M", moveCommand);
+
+
         RoverProbe roverProbe = new RoverProbe(this, plateau);
 
         //read each char of command to rotate or move step
         int i = 0;
         do {
-            switch (input.charAt(i)){
-                case 'L':
-                    leftCommand.execute();
-                    break;
-                case 'R':
-                    rightCommand.execute();
-                    break;
-                case 'M':
-                    moveCommand.execute();
-                    break;
-                default: // if not above character, reject the command
-                    System.out.println("invalid command!!");
-                    return  "-1";
+            ICommand command = commands.get(String.valueOf(input.charAt(i)));
+            if (command == null){
+                return "-1";
+            } else {
+                command.execute();
             }
             //detect if the plateau new position has special material and return "found message" if yes
             probeResult = roverProbe.probeTarget();
@@ -57,7 +58,6 @@ public abstract class SpaceVehicle {
                 break;
             }
             i++;
-
         } while (i< input.length());
 
         //get the new position and direction of Rover
@@ -68,5 +68,5 @@ public abstract class SpaceVehicle {
             return newPosition;
         }
     }
-//    public abstract String probeTarget(RectPlateau plateau);
+
 }

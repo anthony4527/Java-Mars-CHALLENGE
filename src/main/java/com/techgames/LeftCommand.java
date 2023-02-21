@@ -1,6 +1,6 @@
 package com.techgames;
 
-public class LeftCommand {
+public class LeftCommand implements ICommand {
     SpaceVehicle rover;
     public LeftCommand(SpaceVehicle rover){
         this.rover = rover;

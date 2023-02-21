@@ -1,6 +1,6 @@
 package com.techgames;
 
-public class MoveCommand {
+public class MoveCommand implements ICommand {
 
     SpaceVehicle rover;
     RectPlateau plateau;

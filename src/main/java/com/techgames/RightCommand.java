@@ -1,6 +1,6 @@
 package com.techgames;
 
-public class RightCommand {
+public class RightCommand implements ICommand{
 
     SpaceVehicle rover;
     public RightCommand(SpaceVehicle rover){
