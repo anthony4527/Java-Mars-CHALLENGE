@@ -170,4 +170,10 @@ public class MarsRoverTest {
         assertEquals (expected, marsRover.navigate(action, plateau));
     }
 
+    @Test
+    public void chkRoverNavigationNewFolder() {
+        MarsRover marsRover = new MarsRover("M2", 2, 2,'N');
+        RectPlateau plateau = new RectPlateau (5,5, false);
+        assertEquals ("2 4 E", marsRover.navigate("MMR", plateau));
+    }
 }

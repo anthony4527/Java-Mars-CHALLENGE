@@ -126,7 +126,7 @@ public class Console {
         int xRange =0;
         int yRange =0;
         boolean addOre = false;
-        //String[] roverName = {"M1", "M2"};
+
 
         ArrayList<SpaceVehicle> listOfRovers = new ArrayList<SpaceVehicle>();
 
@@ -159,7 +159,7 @@ public class Console {
                 String[] data = input.split(" ");
                 //if type is valid and name is Alphanmeric, add to list
                 if (((!data[0].equals("1")) && (!data[0].equals("2")))
-                    || (data.length > 2)){
+                    || (data.length != 2)){
                     System.out.println("??Incorrect space vehicle");
                 } else {
                     readyCars.add(data);
