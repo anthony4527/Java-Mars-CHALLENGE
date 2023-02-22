@@ -28,7 +28,7 @@ public class Console {
         return true;
     }
 
-    private static SpaceVehicle getRoverLandPosition(Scanner scanner, RectPlateau p, String name) {
+    private static SpaceVehicle getRoverLandPosition(Scanner scanner, RectPlateau p, int type, String name) {
         boolean secondInput = false;
         String position;
         int x = -1;
@@ -59,8 +59,12 @@ public class Console {
             System.out.println("?? Invalid Rover landing position - enter again:");
         } while (!secondInput);
 
-        SpaceVehicle rover = new MarsRover(name, x, y, face);
-        return rover;
+        return (
+                switch (type){
+                    case 1-> (new MarsRover(name, x, y, face));
+                    case 2 -> (new BumbleBee(name, x,y, face));
+                    default -> null;
+                });
     }
 
     private static String getRoverCommand(Scanner scanner, String name) {
@@ -117,14 +121,12 @@ public class Console {
 
     public static void main(String[] args) {
         boolean start;
-        String position, newPosition, plateauRange;
+        String  newPosition;
         String inputCommand;
         int xRange =0;
         int yRange =0;
         boolean addOre = false;
-        String[] landPosition;
-        int landX, landY;
-        String[] roverName = {"M1", "M2"};
+        //String[] roverName = {"M1", "M2"};
 
         ArrayList<SpaceVehicle> listOfRovers = new ArrayList<SpaceVehicle>();
 
@@ -133,7 +135,7 @@ public class Console {
         System.out.println("***********************************************");
         System.out.println("* MARS SPECIAL MISSION - PRECIOUS ROCK SEARCH *");
         System.out.println("***********************************************");
-        System.out.println("Commander, please enter the plateau range (coorindate) for this mission:");
+        System.out.println("STEP 1 - please enter the plateau range (coorindate) for this mission:");
 
         //get the dimension of plateau for constructor
         String[] plateauInput = getPlateauInput(scanner);
@@ -145,12 +147,37 @@ public class Console {
         }
         RectPlateau plateau = new RectPlateau (xRange,yRange, addOre);
 
-        //get user input of rover land positions and create rovers
-        for (int i =0; i<NumOfRovers; i++){
-            SpaceVehicle rover  = getRoverLandPosition(scanner, plateau, roverName[i] );
-            listOfRovers.add(rover);
+        System.out.println("***********************************************");
+        System.out.println("STEP 2 - Let's mobilize Mars Rover and other Space Vehicles for the mission...");
+        ArrayList<String[]> readyCars = new ArrayList<>();
+        boolean moreCar = true;
+        do {
+            System.out.println("Enter the type ('1' for Mars Rover ; '2' for Transformer) with space separated Vehicle name; enter 'X' to finish: ");
+            String input = scanner.nextLine();
+            if (!input.equals("X")){
+                String[] data = input.split(" ");
+                //if type is valid and name is Alphanmeric, add to list
+                readyCars.add(data);
+            } else {
+                moreCar = false;
+                break;
+            }
+        } while (moreCar);
 
+        System.out.println("***********************************************");
+        System.out.println("STEP 3 - Launch the Rovers... ");
+
+        int numOfRovers = readyCars.size();
+                //get user input of rover land positions and create rovers
+        for (int i =0; i<numOfRovers; i++){
+            String[] vInfo = readyCars.get(i); //vehicle info
+            int vType = Integer.parseInt(vInfo[0]);
+            SpaceVehicle vehicle  = getRoverLandPosition(scanner, plateau, vType, vInfo[1] );
+            listOfRovers.add(vehicle);
         }
+
+        System.out.println("***********************************************");
+        System.out.println("STEP 4 - Fire Commands to the Rovers and Space Vehicles... ");
 
         start = true;
         while (start == true ){
@@ -158,47 +185,26 @@ public class Console {
             for (int i=0; i < listOfRovers.size(); i++) {
                 SpaceVehicle rover = listOfRovers.get(i);
                 inputCommand = getRoverCommand(scanner, rover.name);
+                //send command to Mars Rover & get the output
                 newPosition = rover.navigate(inputCommand, plateau);
+
                 if (newPosition.substring(0,5).equals("found")){
                     System.out.println(ANSI_RED+"Precious metal !!!!!"+ newPosition + ANSI_RESET);
                     break;
                 }
                 System.out.println(ANSI_CYAN+"Mars Rover" + rover.name + " has moved to ("+ newPosition + ")" + ANSI_RESET);
             }
-            //send command to Mars Rover & get the output
 
-            // Wait for next command
-            System.out.println("Enter any key to continue with Rover, 'B' to lanuch BumbleBee, or 'X' to stop");
+            System.out.println("Enter any key to continue commanding the mobilized Rovers, or 'X' to stop");
             switch (scanner.nextLine()) {
                 case "X":
                     start = false;
                     System.out.println("You will now disconnect with Rovers..bye bye");
                     break;
-                case "B":
-                    System.out.println("...Calling BumbleBee to land... he has DOUBLE power to move 2 Grid each step!!!");
-/*
-                    position = getRoverLandPosition(scanner, "Bumble-A",xRange, yRange);
-                    landPosition = position.split(" ");
-                    landX = Integer.parseInt(landPosition[0]);
-                    landY = Integer.parseInt(landPosition[1]);
 
-                    //DIRECTION face3 = DIRECTION.getDirection(landPosition[2].charAt(0));
-                    BumbleBee bumbleBee = new BumbleBee("Bumble-A",landX, landY, landPosition[2].charAt(0)  );
-
-                    inputCommand = getRoverCommand(scanner, "Bumble-A");
-                    newPosition = bumbleBee.navigate(inputCommand, plateau);
-                    if (newPosition.substring(0,5).equals("found")){
-                        System.out.println(ANSI_RED+"BumbleBee -> Precious metal !!!!!"+ newPosition + ANSI_RESET);
-                        break;
-                    }
-                    System.out.println(ANSI_YELLOW+"BumbleBee has moved to ("+ newPosition + ")" + ANSI_RESET);
-                    System.out.println(ANSI_YELLOW+"**** BumbleBee is leaving.. continue with Rovers ..." + ANSI_RESET);
-                    break;*/
                 default:
                     break;
             }
-
         }
-
     }
 }
