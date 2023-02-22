@@ -20,9 +20,13 @@ I started design with an initial UML, and developed astract class for Rover, Pla
 After attending Mars Rover Coding seminar and reviewing the SOLID principles against my code, I carried out refactoring and broken down classes into smaller classes. The new version of the programs comprise the following:
 
 a) Individual class for each command - Right, Left and Move were created based on a common ICommand Interface. These command classes are decoupled from the console and Rover classes, and can be requested as objects for each instruction to rovers. This uses the Command design Pattern. Each command can be identified and made easy for future maintenance. new command can be easily added. 
+
 b) A SpaceVehicle Astract class was developed. A Mars Rover class extends from the Space Vehicle to inherit the attributes (Rover's position, direction) and method (navigation). This allow other types of Space vechicles to be deployed easily, by extending from the Space Vehicle. For initial testing, I develooed a 'BumbleBee' transformer vehicle. It inherits attributes and methods same as Mars Rover. It can add its own method in future e.g. to clear a obstacle/hazard on the plateau.
+
 c) The Space Vehicle class navigation method has implemented Open/Close SOLID principle, to allow any future commands to be added without re-opening this navigation code.
+
 d) Similarly, a Plateau interface was developed and a RectanglePlateau demonstrates one implementation of the Plateau. The Plateau interface defines methods of set-in-use(), clearUse() and isSafeToMove() which must be implemented by any form of plateau.
+
 e) The codes have been refactored into smaller classes and grouped into different folders (e.g. Commands folders, Vehicle folder, Plateau folder) in order that they future maintenance and development to scale up system, can be easily performed. Separate Enum files were developed to faciliate future addition/modification. 
 
 Throughout the development, I have used the TDD approach and created the Rovertest class, which include specific test cases and also parameterized test cases. Two CSV files are created for the test cases of moving one rover and moving two rovers respectively. 
