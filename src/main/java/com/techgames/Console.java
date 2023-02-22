@@ -13,7 +13,7 @@ public class Console {
 
     public static final int MaxiumnX =100;
     public static final int MaxiumnY =100;
-    public static final int NumOfRovers = 2;
+    //public static final int NumOfRovers = 2;
 
     private static boolean isValidCommand (String input){
         if (input == null) {
@@ -71,7 +71,7 @@ public class Console {
         boolean secondInput = false;
         String inputCommand;
         do {
-            System.out.println(ANSI_CYAN +"Enter navigation command for " + name+ ":"+ANSI_RESET);
+            System.out.println(ANSI_YELLOW +"Enter navigation command for " + name+ ":"+ANSI_RESET);
             inputCommand = scanner.nextLine();
             if (!isValidCommand(inputCommand)){
                 System.out.println ("??? Not valid input");
@@ -151,13 +151,19 @@ public class Console {
         System.out.println("STEP 2 - Let's mobilize Mars Rover and other Space Vehicles for the mission...");
         ArrayList<String[]> readyCars = new ArrayList<>();
         boolean moreCar = true;
+        // console can accept user to mobilize as many rovers or bumbleBee transformers as they like
         do {
             System.out.println("Enter the type ('1' for Mars Rover ; '2' for Transformer) with space separated Vehicle name; enter 'X' to finish: ");
             String input = scanner.nextLine();
             if (!input.equals("X")){
                 String[] data = input.split(" ");
                 //if type is valid and name is Alphanmeric, add to list
-                readyCars.add(data);
+                if (((!data[0].equals("1")) && (!data[0].equals("2")))
+                    || (data.length > 2)){
+                    System.out.println("??Incorrect space vehicle");
+                } else {
+                    readyCars.add(data);
+                }
             } else {
                 moreCar = false;
                 break;
@@ -192,7 +198,7 @@ public class Console {
                     System.out.println(ANSI_RED+"Precious metal !!!!!"+ newPosition + ANSI_RESET);
                     break;
                 }
-                System.out.println(ANSI_CYAN+"Mars Rover" + rover.name + " has moved to ("+ newPosition + ")" + ANSI_RESET);
+                System.out.println(ANSI_PURPLE+"Mars Rover" + rover.name + " has moved to ("+ newPosition + ")" + ANSI_RESET);
             }
 
             System.out.println("Enter any key to continue commanding the mobilized Rovers, or 'X' to stop");

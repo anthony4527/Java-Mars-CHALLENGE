@@ -8,6 +8,7 @@ public class BumbleBee extends SpaceVehicle {
 
     }
 
+    //BumbleBee can implement additional method than Rover
     public String probeTarget (RectPlateau plateau){
         if ((this.position[0] == plateau.target[0])&& (this.position[1] == plateau.target[1])) {
             return ("found Ore at ("+ String.valueOf(position[0])+","+ String.valueOf(position[1])+ ") by BumbleBee") ;

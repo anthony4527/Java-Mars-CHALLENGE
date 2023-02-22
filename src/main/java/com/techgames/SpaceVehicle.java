@@ -26,16 +26,6 @@ public abstract class SpaceVehicle {
         String newPosition;
         String probeResult = "";
 
-        /*
-        HashMap<COMMAND, ICommand> commands = new HashMap<COMMAND, ICommand>();
-
-        LeftCommand leftCommand = new LeftCommand(this);
-        RightCommand rightCommand = new RightCommand(this);
-        MoveCommand moveCommand = new MoveCommand(this, plateau);
-        commands.put(COMMAND.LEFT, leftCommand);
-        commands.put(COMMAND.RIGHT, rightCommand);
-        commands.put(COMMAND.MOVE, moveCommand);
-        */
         //get list oc commands to check the ones for executing
         CommandList commandList = new CommandList(this, plateau);
         RoverProbe roverProbe = new RoverProbe(this, plateau);
